@@ -5,6 +5,13 @@
   "main": "index.js",
   "author": "Brian Holt <btholt@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "mocha --require test/helpers/setup.js",
+    "lint": "standard --verbose | snazzy",
+    "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .jsx npm t",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
   "dependencies": {
     "axios": "0.9.1",
     "express": "4.13.4",
