@@ -3,11 +3,12 @@ const path = require('path')
 module.exports = {
   context: __dirname,
 
-  entry: './js/ClientApp.jsx',
+  entry: './js/BrowserEntry.jsx',
 
   output: {
     path: path.join(__dirname, '/public'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/public/'
   },
 
   resolve: {
@@ -17,7 +18,7 @@ module.exports = {
   stats: {
     colors: true,
     reasons: true,
-    chunks: false
+    chunks: true
   },
 
   module: {

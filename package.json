@@ -1,21 +1,23 @@
 {
-  "name": "complete-intro-to-react",
+  "name": "db.flix",
   "version": "1.0.0",
-  "description": "A two day workshop on a complete intro to React",
-  "main": "index.js",
-  "author": "Brian Holt <btholt@gmail.com>",
+  "description": "Netflix Clone made in workshop with Brian Holt",
+  "main": "app.js",
+  "author": "David Blanchar <davidb.prof@gmail.com>",
   "license": "MIT",
   "scripts": {
     "test": "mocha --require test/helpers/setup.js",
     "lint": "standard --verbose | snazzy",
     "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .jsx npm t",
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "run": "nodemon app.js"
   },
   "dependencies": {
     "axios": "0.9.1",
     "express": "4.13.4",
     "lodash": "4.6.1",
+    "node-ensure": "0.0.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.0",
@@ -49,18 +51,10 @@
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/btholt/complete-intro-to-react.git"
-  },
   "keywords": [
     "react",
     "workshop",
     "intro",
     "redux"
-  ],
-  "bugs": {
-    "url": "https://github.com/btholt/complete-intro-to-react/issues"
-  },
-  "homepage": "https://github.com/btholt/complete-intro-to-react#readme"
+  ]
 }

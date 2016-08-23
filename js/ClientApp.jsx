@@ -1,35 +1,64 @@
 const React = require('react')
-const ReactDOM = require('react-dom')
-const Landing = require('./Landing')
-const Search = require('./Search')
 const Layout = require('./Layout')
-const Details = require('./Details')
-const { Router, Route, IndexRoute, hashHistory: hh } = require('react-router')
-const { shows } = require('../public/data')
+const { Router, browserHistory: bHist } = require('react-router')
+const { store } = require('./Store')
+const { Provider } = require('react-redux')
+
+if (typeof module !== 'undefined' && module.require) {
+  if (typeof require.ensure === 'undefined') {
+    require.ensure = require('node-ensure') // shim for node.js
+  }
+}
+
+const rootRoute = {
+  component: Layout,
+  path: '/',
+  indexRoute: {
+    getComponent (location, cb) {
+      require.ensure([], () => {
+        cb(null, require('./Landing'))
+      })
+    }
+  },
+  childRoutes: [
+    {
+      path: 'search',
+      getComponent (location, cb) {
+        require.ensure([], () => {
+          cb(null, require('./Search'))
+        })
+      }
+    },
+    {
+      path: 'details/:id',
+      getComponent (location, cb) {
+        require.ensure([], () => {
+          cb(null, require('./Details'))
+        })
+      }
+    }
+  ]
+}
+
+// const myRoutes = () => (
+//   <Route path='/' component={Layout}>
+//     <IndexRoute component={Landing} />
+//     <Route path='/search' component={Search} />
+//     <Route path='/details/:id' component={Details} />
+//   </Route>
+// )
 
 const App = React.createClass({
-  assignShow (nextState, replace) {
-    const showArray = shows.filter((show) => show.imdbID === nextState.params.id)
-
-    if (!showArray.length) {
-      return replace('/')
-    }
-
-    Object.assign(nextState.params, showArray[0])
-    return nextState
-  },
-
   render () {
     return (
-      <Router history={hh}>
-        <Route path='/' component={Layout}>
-          <IndexRoute component={Landing} />
-          <Route path='/search' component={Search} shows={shows} />
-          <Route path='/details/:id' component={Details} onEnter={this.assignShow} />
-        </Route>
-      </Router>
+      <Provider store={store}>
+        <Router history={bHist} routes={rootRoute} />
+      </Provider>
     )
   }
 })
 
-ReactDOM.render(<App />, document.getElementById('app'))
+App.Routes = rootRoute
+App.History = bHist
+
+module.exports = App
