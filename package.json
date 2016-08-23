@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "0.9.1",
+    "babel-register": "^6.11.6",
     "express": "4.13.4",
     "lodash": "4.6.1",
     "node-ensure": "0.0.0",
