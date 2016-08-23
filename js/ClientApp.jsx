@@ -1,15 +1,12 @@
 const React = require('react')
 const Layout = require('./Layout')
-const ReactRouter = require('react-router')
-const { Router, browserHistory } = ReactRouter
-const Store = require('./Store')
-const { store } = Store
-const reactRedux = require('react-redux')
-const { Provider } = reactRedux
+const { Router, browserHistory: bHist } = require('react-router')
+const { store } = require('./Store')
+const { Provider } = require('react-redux')
 
 if (typeof module !== 'undefined' && module.require) {
   if (typeof require.ensure === 'undefined') {
-    require.ensure = require('node-ensure')// shim for node.js
+    require.ensure = require('node-ensure') // shim for node.js
   }
 }
 
@@ -18,10 +15,7 @@ const rootRoute = {
   path: '/',
   indexRoute: {
     getComponent (location, cb) {
-      require.ensure([], (error) => {
-        if (error) {
-          return console.error('ClientApp Landing require.ensure error', error)
-        }
+      require.ensure([], () => {
         cb(null, require('./Landing'))
       })
     }
@@ -30,10 +24,7 @@ const rootRoute = {
     {
       path: 'search',
       getComponent (location, cb) {
-        require.ensure([], (error) => {
-          if (error) {
-            return console.error('ClientApp Search require.ensure error', error)
-          }
+        require.ensure([], () => {
           cb(null, require('./Search'))
         })
       }
@@ -41,10 +32,7 @@ const rootRoute = {
     {
       path: 'details/:id',
       getComponent (location, cb) {
-        require.ensure([], (error) => {
-          if (error) {
-            return console.error('ClientApp Details require.ensure error', error)
-          }
+        require.ensure([], () => {
           cb(null, require('./Details'))
         })
       }
@@ -52,18 +40,25 @@ const rootRoute = {
   ]
 }
 
-class App extends React.Component {
+// const myRoutes = () => (
+//   <Route path='/' component={Layout}>
+//     <IndexRoute component={Landing} />
+//     <Route path='/search' component={Search} />
+//     <Route path='/details/:id' component={Details} />
+//   </Route>
+// )
+
+const App = React.createClass({
   render () {
     return (
       <Provider store={store}>
-        <Router routes={rootRoute} history={browserHistory} />
+        <Router history={bHist} routes={rootRoute} />
       </Provider>
     )
   }
-}
+})
 
-// App.Routes = myRoutes
 App.Routes = rootRoute
-App.History = browserHistory
+App.History = bHist
 
 module.exports = App

@@ -11,7 +11,7 @@ html {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url(img/3.jpg);
+  background-image: url(img/4.jpg);
   background-size: cover;
   background-position: center;
   display: -webkit-box;
@@ -150,7 +150,7 @@ a > .show-card {
   display: block;
   float: right;
   width: 52%;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
 }
 
 .show-card-title {

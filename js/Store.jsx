@@ -1,36 +1,49 @@
 const redux = require('redux')
 const reactRedux = require('react-redux')
-const data = require('../public/data')
-
+const { shows } = require('../public/data')
 const SET_SEARCH_TERM = 'setSearchTerm'
 const initialState = {
   searchTerm: '',
-  shows: data.shows
+  shows
 }
 
-const reducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case SET_SEARCH_TERM:
-      const newState = {}
-      Object.assign(newState, state, {searchTerm: action.value})
-      return newState
+      return reduceSearchTerm(state, action)
+
     default:
       return state
   }
 }
 
-const store = redux.createStore(reducer, initialState, redux.compose(
-  typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : (f) => f
-))
-const mapStateToProps = (state) => ({ searchTerm: state.searchTerm, shows: data.shows })
+const reduceSearchTerm = (state, action) => {
+  const newState = {}
+  Object.assign(newState, state, {searchTerm: action.value})
+  return newState
+}
+
+const mapStateToProps = (state) => (
+  {
+    searchTerm: state.searchTerm,
+    shows: state.shows
+  }
+)
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSearchTerm: (term) => {
-      dispatch({type: SET_SEARCH_TERM, value: term})
+    setSearchTerm (searchTerm) {
+      dispatch({type: SET_SEARCH_TERM, value: searchTerm})
     }
   }
 }
 
+const store = redux.createStore(rootReducer, initialState, redux.compose(
+  typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
+    ? window.devToolsExtension() : (f) => f
+))
+
 const connector = reactRedux.connect(mapStateToProps, mapDispatchToProps)
 
-module.exports = { connector, store, reducer }
+module.exports = { connector, store, rootReducer }
