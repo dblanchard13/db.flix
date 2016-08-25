@@ -35,7 +35,8 @@ xdescribe('<Search />', () => {
 describe('Store', () => {
   it('Should bootstrap', () => {
     const state = rootReducer(undefined, {type: '@@redux/INIT'})
-    expect(state).to.deep.eq({ searchTerm: '' })
+    expect(state.searchTerm).to.eq('')
+    expect(state.shows.length).to.eq(21)
   })
 
   it('Should handle setSearchTerm action', () => {
