@@ -11,7 +11,8 @@
     "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .jsx npm t",
     "build": "webpack",
     "watch": "webpack --watch",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "postinstall": "webpack"
   },
   "dependencies": {
     "axios": "0.9.1",
